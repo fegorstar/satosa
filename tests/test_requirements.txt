@@ -1,0 +1,4 @@
+pytest
+responses
+beautifulsoup4
+ldap3

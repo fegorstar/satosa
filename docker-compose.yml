@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: '3.7'
+
+services:
+  satosa-proxy:
+    image: satosa:7.0.3
+    build: .
+    restart: unless-stopped
+    ports:
+    - "8000:8000"
+    volumes:
+    - "/opt/satosa/etc/:/opt/satosa/etc/"
+    - "/opt/satosa/etc/metadata.key:/opt/satosa/etc/metadata.key"
+    - "/opt/satosa/etc/pki/sp.key:/pki/sp.key"
+    - "/opt/satosa/etc/pki/sp.crt:/pki/sp.crt"
+    - "/opt/satosa/etc/pki/idp.key:/pki/idp.key"
+    - "/opt/satosa/etc/pki/idp.crt:/pki/idp.crt"
+    - "/opt/satosa/etc/metadata.crt:/opt/satosa/etc/metadata.crt"
+    - "/opt/satosa/etc/internal_attributes.yaml:/internal_attributes.yaml"
+    - "/opt/satosa/etc/plugins/backends/:/plugins/backends/"
+    - "/opt/satosa/etc/plugins/frontends/:/plugins/frontends/"
+    - "/opt/satosa/etc/plugins/microservices/:/plugins/microservices/"
+    environment:
+    - VIRTUAL_HOST=wacrenproxy.eduid.africa
+    - VIRTUAL_PORT=8000
+    - LETSENCRYPT_EMAIL=nse@wacren.net
+    - LETSENCRYPT_HOST=wacrenproxy.eduid.africa 
+    logging:
+       driver: 'json-file'
